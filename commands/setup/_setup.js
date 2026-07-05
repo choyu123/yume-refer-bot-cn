@@ -1,8 +1,8 @@
 /*CMD
   command: /setup
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: setup
 
   <<ANSWER
@@ -12,11 +12,11 @@
   <<KEYBOARD
 
   KEYBOARD
-  aliases: 
-  group: 
+  aliases:
+  group:
 CMD*/
 
-const defaultStartMessage = `欢迎回来，Yume 小店开门中。
+const defaultStartMessage = `欢迎回来，Yume 小店开门中，喵~
 
 每日签到：0.5 积分
 邀请有效好友：1 积分
@@ -27,7 +27,7 @@ const defaultStartMessage = `欢迎回来，Yume 小店开门中。
 通知频道：@yumeGptplus
 官方交流群：https://t.me/yumeHubplus`;
 
-const defaultHelpMessage = `小橘使用说明
+const defaultHelpMessage = `小橘使用说明，喵~
 
 1. 先点「活人验证」，答对一道小题。
 2. 加入通知频道 @yumeGptplus。
@@ -37,7 +37,7 @@ const defaultHelpMessage = `小橘使用说明
 6. 邀请有效好友可以拿 1 积分。
 7. 以后兑换到的卡密，会放在「我的卡密」里。
 
-有问题就来官方交流群找小橘。`;
+有问题就来官方交流群找小橘，喵~`;
 
 const settingsPanel = {
   title: "Yume 小店设置",
@@ -122,7 +122,7 @@ const settingsPanel = {
       title: "欢迎语",
       description: "用户启动机器人后看到的主文案。",
       type: "text",
-      placeholder: "欢迎回来，Yume 小店开门中。",
+      placeholder: "欢迎回来，Yume 小店开门中，喵~",
       value: defaultStartMessage
     },
     {
@@ -130,8 +130,8 @@ const settingsPanel = {
       title: "错误提示",
       description: "用户操作失败时看到的提示。",
       type: "text",
-      placeholder: "小橘没看懂这句。",
-      value: "小橘没看懂这句。可以点「返回主菜单」重新选一下。"
+      placeholder: "小橘没看懂这句，喵~",
+      value: "小橘没看懂这句，喵~ 可以点「返回主菜单」重新选一下。"
     },
     {
       name: "MINIMUM_WITHDRAW",
@@ -201,5 +201,5 @@ AdminPanel.setPanel({
 });
 
 Libs.MembershipChecker.setup();
-Bot.sendMessage("Yume 小店基础设置已完成。");
+Bot.sendMessage("Yume 小店基础设置已完成，喵~");
 Bot.sendMessage("命令菜单已更新。");

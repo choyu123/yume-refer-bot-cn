@@ -1,13 +1,13 @@
 /*CMD
   command: /cards
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: user basic
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 let cards = User.getProperty("card_keys") || [];
@@ -23,7 +23,7 @@ if (typeof cards === "string") {
 let message = "<b>你的专属卡密资产库</b>\n\n";
 
 if (!Array.isArray(cards) || cards.length === 0) {
-  message += "暂时还没有卡密。\n\n等积分商城上架后，兑换到的卡密都会安安静静躺在这里。";
+  message += "暂时还没有卡密，喵~\n\n等积分商城上架后，兑换到的卡密都会安安静静躺在这里。";
 } else {
   cards.forEach((card, index) => {
     const id = card.id || index + 1;

@@ -1,13 +1,13 @@
 /*CMD
   command: !
-  help: 
-  need_reply: 
-  auto_retry_time: 
-  folder: 
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  help:
+  need_reply:
+  auto_retry_time:
+  folder:
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 if (!user) return;
@@ -18,7 +18,7 @@ function getIncomingText() {
 
 function sendJoinNextStep() {
   Api.sendMessage({
-    text: "验证通过，小橘给你开门啦。\n\n现在加入通知频道和官方交流群，再点「验证入群」。",
+    text: "验证通过，小橘给你开门啦，喵~\n\n现在加入通知频道和官方交流群，再点「验证入群」。",
     reply_markup: {
       inline_keyboard: [
         [
@@ -45,9 +45,9 @@ if (User.getProperty("human_pending")) {
       const currency = SETTINGS.CURRENCY || "积分";
       Libs.ResourcesLib.userRes("balance").add(reward);
       User.setProperty("human_rewarded", true, "boolean");
-      Bot.sendMessage(`答对啦。小橘给你放了 ${reward} ${currency} 到账本里。`);
+      Bot.sendMessage(`答对啦，喵~ 小橘给你放了 ${reward} ${currency} 到账本里。`);
     } else {
-      Bot.sendMessage("答对啦，活人验证通过。");
+      Bot.sendMessage("答对啦，活人验证通过，喵~");
     }
 
     sendJoinNextStep();
@@ -59,15 +59,15 @@ if (User.getProperty("human_pending")) {
 
   if (attempts >= 3) {
     User.setProperty("human_pending", false, "boolean");
-    Bot.sendMessage("这题先放过啦。点「活人验证」换一道，小橘重新出题。");
+    Bot.sendMessage("这题先放过啦，喵~ 点「活人验证」换一道，小橘重新出题。");
   } else {
-    Bot.sendMessage("答案不太对，再看一眼题目，直接回复数字就好。");
+    Bot.sendMessage("答案不太对，喵~ 再看一眼题目，直接回复数字就好。");
   }
   return;
 }
 
 let errorMessage =
   SETTINGS.ERROR_MESSAGE ||
-  "小橘没看懂这句。可以点「返回主菜单」重新选一下。";
+  "小橘没看懂这句，喵~ 可以点「返回主菜单」重新选一下。";
 
 Bot.sendMessage(errorMessage);

@@ -1,13 +1,13 @@
 /*CMD
   command: /shop
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: user basic
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 const currency = SETTINGS.CURRENCY || "积分";
@@ -15,7 +15,7 @@ const balance = Libs.ResourcesLib.userRes("balance").value();
 
 const message = `<b>积分商城</b>
 
-小橘正在把货架擦干净。
+小橘正在把货架擦干净，喵~
 
 当前积分：${balance} ${currency}
 

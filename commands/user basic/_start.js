@@ -1,8 +1,8 @@
 /*CMD
   command: /start
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: user basic
 
   <<ANSWER
@@ -12,8 +12,8 @@
   <<KEYBOARD
 
   KEYBOARD
-  aliases: 
-  group: 
+  aliases:
+  group:
 CMD*/
 
 const linkPrefix = SETTINGS.REFER_LINK_PREFIX || "ref";
@@ -26,21 +26,21 @@ if (chat && chat.just_created === true) {
 
 RefLib.track({
   onTouchOwnLink: function () {
-    Bot.sendMessage("这是你自己的邀请链接，小橘已经认出来啦。换个朋友来试试。");
+    Bot.sendMessage("这是你自己的邀请链接，小橘已经认出来啦，喵~ 换个朋友来试试。");
   },
   onAtractedByUser: function (byUser) {
     Api.sendMessage({
-      text: `你是通过 <a href="tg://user?id=${byUser.telegramid}">${byUser.first_name}</a> 的邀请链接来的，小橘已经记好啦。`,
+      text: `你是通过 <a href="tg://user?id=${byUser.telegramid}">${byUser.first_name}</a> 的邀请链接来的，小橘已经记好啦，喵~`,
       parse_mode: "HTML"
     });
     Api.sendMessage({
       chat_id: byUser.telegramid,
-      text: `有新朋友 <a href="tg://user?id=${user.telegramid}">${user.first_name}</a> 通过你的邀请链接进来了。等对方完成验证后，小橘会继续记录邀请状态。`,
+      text: `有新朋友 <a href="tg://user?id=${user.telegramid}">${user.first_name}</a> 通过你的邀请链接进来了。等对方完成验证后，小橘会继续记录邀请状态，喵~`,
       parse_mode: "HTML"
     });
   },
   onAlreadyAttracted: function () {
-    Bot.sendMessage("你已经绑定过邀请关系啦，不用重复操作。");
+    Bot.sendMessage("你已经绑定过邀请关系啦，不用重复操作，喵~");
   },
   linkPrefix: linkPrefix
 });
@@ -74,7 +74,7 @@ function isHumanVerified() {
 }
 
 function sendHumanVerificationMessage() {
-  const msg = `欢迎来到 Yume 小店。
+  const msg = `欢迎来到 Yume 小店，喵~
 
 小橘先确认一下你是真人。
 答对一道小题，就能继续加入频道和群，打开完整菜单。`;
@@ -91,7 +91,7 @@ function sendJoinMessage(chats) {
   const inlineKeyboard = generateJoinButtons(chats);
   const msg =
     SETTINGS.NEED_JOIN_MSG ||
-    `还差一步，小橘在门口等你。
+    `还差一步，小橘在门口等你，喵~
 
 请先加入通知频道和官方交流群。
 回来后点「验证入群」，通过后完整菜单就会打开。`;
@@ -124,7 +124,7 @@ function rewardInviterIfNeeded() {
 
   Api.sendMessage({
     chat_id: inviter.telegramid,
-    text: `你邀请的新朋友 ${user.first_name} 已完成验证。${referralBonus} ${currency} 已放进你的小账本。`,
+    text: `你邀请的新朋友 ${user.first_name} 已完成验证。${referralBonus} ${currency} 已放进你的小账本，喵~`,
     parse_mode: "HTML"
   });
 }
@@ -132,7 +132,7 @@ function rewardInviterIfNeeded() {
 function getStartMessageContent() {
   return (
     SETTINGS.START_MESSAGE ||
-    `欢迎回来，Yume 小店开门中。
+    `欢迎回来，Yume 小店开门中，喵~
 
 每日签到：0.5 积分
 邀请有效好友：1 积分

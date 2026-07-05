@@ -1,13 +1,13 @@
 /*CMD
   command: /bonus
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: user basic
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 const interval = SETTINGS.BONUS_INTERVAL || 24;
@@ -35,7 +35,7 @@ if (lastClaimTime) {
   let timeDifference = getTimeDifferenceInHours(lastClaimTime, currentTime);
   if (timeDifference < interval) {
     let remainingTime = (interval - timeDifference).toFixed(2);
-    sendMessage(`今天的小爪印已经盖过啦。\n距离下次签到还要 ${remainingTime} 小时。`);
+    sendMessage(`今天的小爪印已经盖过啦，喵~\n距离下次签到还要 ${remainingTime} 小时。`);
     return;
   }
 }
@@ -44,4 +44,4 @@ let balance = ResLib.userRes("balance");
 balance.add(Number(bonusAmount));
 User.setProp("claimTime", currentTime);
 
-sendMessage(`签到成功。\n小橘给你记上 ${bonusAmount} ${currency}。\n当前积分：${balance.value()} ${currency}`);
+sendMessage(`签到成功，喵~\n小橘给你记上 ${bonusAmount} ${currency}。\n当前积分：${balance.value()} ${currency}`);

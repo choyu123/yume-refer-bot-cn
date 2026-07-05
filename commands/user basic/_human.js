@@ -1,13 +1,13 @@
 /*CMD
   command: /human
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: user basic
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 function randomInt(min, max) {
@@ -36,7 +36,7 @@ function makeQuestion() {
 
 if (User.getProperty("human_verified")) {
   Api.sendMessage({
-    text: "你已经通过活人验证啦。\n\n下一步加入通知频道和官方交流群，再点「验证入群」。",
+    text: "你已经通过活人验证啦，喵~\n\n下一步加入通知频道和官方交流群，再点「验证入群」。",
     reply_markup: {
       inline_keyboard: [
         [
@@ -57,7 +57,7 @@ User.setProperty("human_question", question.text, "string");
 User.setProperty("human_attempts", 0, "integer");
 
 Api.sendMessage({
-  text: `小橘出题啦。
+  text: `小橘出题啦，喵~
 
 ${question.text} = ?
 

@@ -1,18 +1,18 @@
 /*CMD
   command: /help
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: support
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 const helpMessage =
   SETTINGS.SUPPORT_MESSAGE ||
-  `小橘使用说明
+  `小橘使用说明，喵~
 
 1. 先点「活人验证」，答对一道小题。
 2. 加入通知频道 @yumeGptplus。
@@ -22,7 +22,7 @@ const helpMessage =
 6. 邀请有效好友可以拿 1 积分。
 7. 以后兑换到的卡密，会放在「我的卡密」里。
 
-有问题就来官方交流群找小橘。`;
+有问题就来官方交流群找小橘，喵~`;
 
 const buttons = {
   inline_keyboard: [
