@@ -22,7 +22,7 @@ const defaultStartMessage = `欢迎回来，Yume 小店开门中，喵~
 邀请有效好友：1 积分
 首次通过活人验证：1 积分
 
-卡密商城还在上货，你可以先把积分攒起来。
+积分商城会不定期上架卡密，你可以先把积分攒起来。
 
 通知频道：@yumeGptplus
 官方交流群：https://t.me/yumeHubplus`;
@@ -185,7 +185,13 @@ const botCommands = [
   { command: "/toplist", description: "邀请排行" },
   { command: "/myreferrals", description: "邀请明细" },
   { command: "/help", description: "使用教程" },
-  { command: "/sendbalance", description: "管理员：增减积分" },
+  { command: "/addcards", description: "管理员：批量导入卡密" },
+  { command: "/stock", description: "管理员：查看库存" },
+  { command: "/orders", description: "管理员：查看订单" },
+  { command: "/offproduct", description: "管理员：下架商品" },
+  { command: "/onproduct", description: "管理员：上架商品" },
+  { command: "/addpoints", description: "管理员：增加积分" },
+  { command: "/cutpoints", description: "管理员：扣除积分" },
   { command: "/broadcast", description: "管理员：群发消息" },
   { command: "/broadcast_status", description: "管理员：查看群发状态" },
   { command: "/ban", description: "管理员：封禁用户" },
