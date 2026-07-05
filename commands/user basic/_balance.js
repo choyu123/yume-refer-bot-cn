@@ -1,0 +1,58 @@
+/*CMD
+  command: /balance
+  help: 
+  need_reply: false
+  auto_retry_time: 
+  folder: user basic
+  answer: 
+  keyboard: 
+  aliases: 
+  group: 
+CMD*/
+
+const linkPrefix = SETTINGS.REFER_LINK_PREFIX || "ref";
+const currency = SETTINGS.CURRENCY || "积分";
+const userId = user.telegramid;
+const firstName = user.first_name || "未设置";
+const username = user.username ? "@" + user.username : "未设置";
+const inviter = RefLib.getAttractedBy();
+const inviteLink = Libs.ReferralLib.getRefLink(bot.name, linkPrefix);
+const balance = Libs.ResourcesLib.userRes("balance").value();
+const inviteCount = Libs.ReferralLib.getRefCount();
+
+const profileMessage = `<b>我的积分</b>
+
+用户 ID：<code>${userId}</code>
+昵称：${firstName}
+用户名：${username}
+邀请人：${inviter?.first_name || "无"}
+
+当前积分：${balance} ${currency}
+累计有效邀请：${inviteCount}
+
+专属邀请链接：
+<code>${inviteLink}</code>`;
+
+const buttons = {
+  inline_keyboard: [
+    [{ text: "复制邀请链接", copy_text: { text: inviteLink } }],
+    [
+      { text: "邀请赚积分", callback_data: "/referral" },
+      { text: "积分商城", callback_data: "/shop" }
+    ],
+    [{ text: "返回主菜单", callback_data: "/start" }]
+  ]
+};
+
+const prms = {
+  text: profileMessage,
+  parse_mode: "HTML",
+  reply_markup: buttons
+};
+
+if (request.message?.message_id) {
+  Api.editMessageText({ ...prms, message_id: request.message.message_id });
+  return;
+}
+
+Api.sendMessage(prms);
