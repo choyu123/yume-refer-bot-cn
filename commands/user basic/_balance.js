@@ -15,7 +15,8 @@ const currency = SETTINGS.CURRENCY || "积分";
 const userId = user.telegramid;
 const firstName = user.first_name || "未设置";
 const username = user.username ? "@" + user.username : "未设置";
-const inviter = RefLib.getAttractedBy();
+const inviter = Libs.ReferralLib.getAttractedBy();
+const inviterName = inviter && inviter.first_name ? inviter.first_name : "无";
 Libs.ReferralLib.setLinkPrefix(linkPrefix);
 const inviteLink = Libs.ReferralLib.getLink(bot.name);
 const balance = Libs.ResourcesLib.userRes("balance").value();
@@ -32,7 +33,7 @@ const profileMessage = `<b>你的小账本</b>
 昵称：${firstName}
 用户名：${username}
 用户 ID：<code>${userId}</code>
-邀请人：${inviter?.first_name || "无"}
+邀请人：${inviterName}
 
 当前积分：${balance} ${currency}
 已结算有效邀请：${stats.settled} 人
@@ -57,9 +58,10 @@ const prms = {
   reply_markup: buttons
 };
 
-if (request.message?.message_id) {
-  Api.editMessageText({ ...prms, message_id: request.message.message_id });
-  return;
+if (typeof request !== "undefined" && request && request.id) {
+  try {
+    Api.answerCallbackQuery({ callback_query_id: request.id });
+  } catch (e) {}
 }
 
 Api.sendMessage(prms);

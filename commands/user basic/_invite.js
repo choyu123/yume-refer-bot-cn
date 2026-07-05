@@ -66,14 +66,10 @@ const buttons = {
   ]
 };
 
-if (request.message && request.message.message_id) {
-  Api.editMessageText({
-    message_id: request.message.message_id,
-    text: message,
-    parse_mode: "HTML",
-    reply_markup: buttons
-  });
-  return;
+if (typeof request !== "undefined" && request && request.id) {
+  try {
+    Api.answerCallbackQuery({ callback_query_id: request.id });
+  } catch (e) {}
 }
 
 Api.sendMessage({ text: message, parse_mode: "HTML", reply_markup: buttons });

@@ -13,11 +13,12 @@ CMD*/
 if (!user) return;
 
 function incomingText() {
+  const req = typeof request !== "undefined" && request ? request : {};
   const candidates = [
-    request?.data,
-    request?.text,
+    req.data,
+    req.text,
     typeof message !== "undefined" ? message : "",
-    request?.message?.text
+    req.message && req.message.text
   ];
 
   for (let i = 0; i < candidates.length; i += 1) {
@@ -31,6 +32,14 @@ function incomingText() {
 }
 
 const text = incomingText();
+
+function answerCallback() {
+  const req = typeof request !== "undefined" && request ? request : {};
+  if (!req.id) return;
+  try {
+    Api.answerCallbackQuery({ callback_query_id: req.id });
+  } catch (e) {}
+}
 
 const callbackRoutes = {
   "/invite": "/invite",
@@ -60,11 +69,13 @@ const callbackRoutes = {
 };
 
 if (callbackRoutes[text]) {
+  answerCallback();
   Bot.runCommand(callbackRoutes[text]);
   return;
 }
 
 if (text.indexOf("/buy ") === 0) {
+  answerCallback();
   Bot.runCommand(text);
   return;
 }
