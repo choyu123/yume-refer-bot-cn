@@ -61,14 +61,15 @@ if (User.getProperty("human_pending")) {
     }
 
     const inviter = Libs.ReferralLib.getAttractedBy();
-    const noticeCount = Number(User.getProperty("inviter_notice_count") || 0);
+    const noticeKey = inviter ? "YUME_INVITER_NOTICE_COUNT_" + inviter.telegramid : "";
+    const noticeCount = noticeKey ? Number(Bot.getProperty(noticeKey, 0)) : 0;
     if (inviter && noticeCount < 5) {
       Api.sendMessage({
         chat_id: inviter.telegramid,
         text: `你邀请的好友 <a href="tg://user?id=${user.telegramid}">${user.first_name || "用户"}</a> 已通过活人验证，正在往有效邀请路上走，喵~`,
         parse_mode: "HTML"
       });
-      User.setProperty("inviter_notice_count", noticeCount + 1, "integer");
+      Bot.setProperty(noticeKey, noticeCount + 1, "integer");
     }
 
     sendJoinNextStep();

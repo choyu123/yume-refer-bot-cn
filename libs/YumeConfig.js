@@ -82,19 +82,19 @@ function mainMenuButtons() {
   return {
     inline_keyboard: [
       [
-        { text: "我的积分", callback_data: "/balance" },
-        { text: "每日签到", callback_data: "/bonus" }
+        { text: "加入官方频道", url: "https://t.me/yumeGptplus" },
+        { text: "我已加入/签到", callback_data: "/bonus" }
       ],
       [
-        { text: "邀请好友", callback_data: "/referral" },
-        { text: "积分商城", callback_data: "/shop" }
+        { text: "邀请赚积分", callback_data: "/referral" },
+        { text: "我的积分", callback_data: "/balance" }
       ],
       [
-        { text: "邀请排行", callback_data: "/toplist" },
-        { text: "使用教程", callback_data: "/help" }
+        { text: "积分商城", callback_data: "/shop" },
+        { text: "邀请排行", callback_data: "/toplist" }
       ],
       [
-        { text: "我的卡密", callback_data: "/cards" },
+        { text: "使用教程", callback_data: "/help" },
         { text: "返回主菜单", callback_data: "/start" }
       ]
     ]

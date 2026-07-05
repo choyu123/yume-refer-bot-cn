@@ -173,7 +173,7 @@ function formatStock(state) {
 
   return state.products.map((product, index) => {
     const status = product.active === false ? "下架" : "上架";
-    return `${index + 1}. ${product.title}\n价格：${product.price} 积分\n库存：${product.stock.length}\n已卖：${product.sold}\n状态：${status}`;
+    return `${index + 1}. ${product.title}\n商品ID：${product.id}\n价格：${product.price} 积分\n库存：${product.stock.length}\n已卖：${product.sold}\n状态：${status}`;
   }).join("\n\n");
 }
 
