@@ -45,7 +45,7 @@ const buttons = {
   inline_keyboard: [
     [{ text: "复制邀请链接", copy_text: { text: inviteLink } }],
     [
-      { text: "邀请赚积分", callback_data: "/referral" },
+      { text: "邀请赚积分", callback_data: "/invite" },
       { text: "我的卡密", callback_data: "/cards" }
     ],
     [{ text: "返回主菜单", callback_data: "/start" }]

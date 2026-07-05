@@ -55,7 +55,7 @@ if (!Array.isArray(cards) || cards.length === 0) {
 const buttons = {
   inline_keyboard: [
     [{ text: "积分商城", callback_data: "/shop" }],
-    [{ text: "邀请赚积分", callback_data: "/referral" }],
+    [{ text: "邀请赚积分", callback_data: "/invite" }],
     [{ text: "返回主菜单", callback_data: "/start" }]
   ]
 };

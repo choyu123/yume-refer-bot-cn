@@ -16,6 +16,13 @@ function incomingText() {
   return (typeof message !== "undefined" && message ? message : request?.text || "").trim();
 }
 
+const text = incomingText();
+
+if (["/invite", "/referral", "邀请赚积分", "邀请好友"].includes(text)) {
+  Bot.runCommand("/invite");
+  return;
+}
+
 function joinButtons() {
   return {
     inline_keyboard: [
@@ -38,7 +45,6 @@ function sendJoinNextStep() {
 }
 
 if (User.getProperty("human_pending")) {
-  const text = incomingText();
   const expected = User.getProperty("human_answer");
 
   if (text === expected) {

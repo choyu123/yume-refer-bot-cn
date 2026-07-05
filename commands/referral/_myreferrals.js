@@ -31,7 +31,7 @@ if (items.length === 0) {
 }
 
 const buttons = {
-  inline_keyboard: [[{ text: "返回邀请页", callback_data: "/referral" }]]
+  inline_keyboard: [[{ text: "返回邀请页", callback_data: "/invite" }]]
 };
 
 if (request.message && request.message.message_id) {

@@ -20,7 +20,7 @@ function sendOrEdit(text) {
     parse_mode: "HTML",
     reply_markup: {
       inline_keyboard: [
-        [{ text: "邀请赚积分", callback_data: "/referral" }],
+        [{ text: "邀请赚积分", callback_data: "/invite" }],
         [{ text: "返回主菜单", callback_data: "/start" }]
       ]
     }

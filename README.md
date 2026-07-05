@@ -83,6 +83,7 @@ onError:
 /start            打开主菜单
 /human            活人验证
 /bonus            每日签到
+/invite           邀请赚积分
 /referral         邀请赚积分
 /settle_referrals 刷新邀请奖励
 /myreferrals      邀请明细

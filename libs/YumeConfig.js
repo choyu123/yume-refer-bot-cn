@@ -86,7 +86,7 @@ function mainMenuButtons() {
         { text: "我已加入/签到", callback_data: "/bonus" }
       ],
       [
-        { text: "邀请赚积分", callback_data: "/referral" },
+        { text: "邀请赚积分", callback_data: "/invite" },
         { text: "我的积分", callback_data: "/balance" }
       ],
       [

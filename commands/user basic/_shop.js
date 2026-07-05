@@ -43,7 +43,7 @@ if (products.length === 0) {
 
 buttons.inline_keyboard.push([
   { text: "我的卡密", callback_data: "/cards" },
-  { text: "邀请赚积分", callback_data: "/referral" }
+  { text: "邀请赚积分", callback_data: "/invite" }
 ]);
 buttons.inline_keyboard.push([{ text: "返回主菜单", callback_data: "/start" }]);
 
