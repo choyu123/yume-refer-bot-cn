@@ -68,3 +68,5 @@ ${question.text} = ?
     inline_keyboard: [[{ text: "换一道题", callback_data: "/human" }]]
   }
 });
+
+Bot.runCommand("/human_answer");
