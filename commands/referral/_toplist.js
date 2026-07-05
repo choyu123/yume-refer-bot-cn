@@ -23,10 +23,10 @@ function getTopReferringUsers() {
 
 function generateLeaderboardMessage(items) {
   if (items.length === 0) {
-    return "暂无邀请排行数据。";
+    return "排行榜还空着。第一串脚印，等你来踩。";
   }
 
-  let msg = "<b>邀请排行榜</b>\n\n";
+  let msg = "<b>邀请排行</b>\n\n";
   items.forEach((prop, index) => {
     let name = prop.user.first_name || "用户";
     msg += `${index + 1}. <a href="tg://user?id=${prop.user.telegramid}">${name}</a> - ${prop.value} 人\n`;

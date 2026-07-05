@@ -10,7 +10,6 @@
   group: 
 CMD*/
 
-// we can't send message
 if (!user) return;
 
 function getIncomingText() {
@@ -19,7 +18,7 @@ function getIncomingText() {
 
 function sendJoinNextStep() {
   Api.sendMessage({
-    text: "活人验证已通过，还差最后一步。\n\n请加入通知频道和官方交流群，然后点击「验证入群」。",
+    text: "验证通过，小橘给你开门啦。\n\n现在加入通知频道和官方交流群，再点「验证入群」。",
     reply_markup: {
       inline_keyboard: [
         [
@@ -46,9 +45,9 @@ if (User.getProperty("human_pending")) {
       const currency = SETTINGS.CURRENCY || "积分";
       Libs.ResourcesLib.userRes("balance").add(reward);
       User.setProperty("human_rewarded", true, "boolean");
-      Bot.sendMessage(`恭喜，真人校验通过。\n系统已赠送 ${reward} ${currency}。`);
+      Bot.sendMessage(`答对啦。小橘给你放了 ${reward} ${currency} 到账本里。`);
     } else {
-      Bot.sendMessage("恭喜，真人校验通过。");
+      Bot.sendMessage("答对啦，活人验证通过。");
     }
 
     sendJoinNextStep();
@@ -60,16 +59,15 @@ if (User.getProperty("human_pending")) {
 
   if (attempts >= 3) {
     User.setProperty("human_pending", false, "boolean");
-    Bot.sendMessage("答案错误次数较多，请点击「活人验证」重新获取题目。");
+    Bot.sendMessage("这题先放过啦。点「活人验证」换一道，小橘重新出题。");
   } else {
-    Bot.sendMessage("答案不正确，请重新输入数字答案。");
+    Bot.sendMessage("答案不太对，再看一眼题目，直接回复数字就好。");
   }
   return;
 }
 
-// error message content
 let errorMessage =
   SETTINGS.ERROR_MESSAGE ||
-  "操作失败，请稍后重试。若一直无法使用，请加入官方交流群反馈：https://t.me/yumeHubplus";
+  "小橘没看懂这句。可以点「返回主菜单」重新选一下。";
 
 Bot.sendMessage(errorMessage);

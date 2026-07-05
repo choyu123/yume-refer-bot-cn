@@ -26,21 +26,21 @@ if (chat && chat.just_created === true) {
 
 RefLib.track({
   onTouchOwnLink: function () {
-    Bot.sendMessage("不能通过自己的邀请链接进入。");
+    Bot.sendMessage("这是你自己的邀请链接，小橘已经认出来啦。换个朋友来试试。");
   },
   onAtractedByUser: function (byUser) {
     Api.sendMessage({
-      text: `你通过 <a href="tg://user?id=${byUser.telegramid}">${byUser.first_name}</a> 的邀请链接进入。`,
+      text: `你是通过 <a href="tg://user?id=${byUser.telegramid}">${byUser.first_name}</a> 的邀请链接来的，小橘已经记好啦。`,
       parse_mode: "HTML"
     });
     Api.sendMessage({
       chat_id: byUser.telegramid,
-      text: `有新用户 <a href="tg://user?id=${user.telegramid}">${user.first_name}</a> 通过你的邀请链接进入。对方完成频道/群验证后，你将获得奖励。`,
+      text: `有新朋友 <a href="tg://user?id=${user.telegramid}">${user.first_name}</a> 通过你的邀请链接进来了。等对方完成验证后，小橘会继续记录邀请状态。`,
       parse_mode: "HTML"
     });
   },
   onAlreadyAttracted: function () {
-    Bot.sendMessage("你已经绑定过邀请关系。");
+    Bot.sendMessage("你已经绑定过邀请关系啦，不用重复操作。");
   },
   linkPrefix: linkPrefix
 });
@@ -74,15 +74,15 @@ function isHumanVerified() {
 }
 
 function sendHumanVerificationMessage() {
-  const msg = `欢迎使用 Yume 积分机器人。
+  const msg = `欢迎来到 Yume 小店。
 
-第一步：先通过活人验证。
-通过后再加入通知频道和官方交流群，即可解锁完整菜单。`;
+小橘先确认一下你是真人。
+答对一道小题，就能继续加入频道和群，打开完整菜单。`;
 
   sendMessage(msg, {
     inline_keyboard: [
       [{ text: "活人验证", callback_data: "/human" }],
-      [{ text: "切换语言", callback_data: "/help" }]
+      [{ text: "使用教程", callback_data: "/help" }]
     ]
   });
 }
@@ -91,7 +91,10 @@ function sendJoinMessage(chats) {
   const inlineKeyboard = generateJoinButtons(chats);
   const msg =
     SETTINGS.NEED_JOIN_MSG ||
-    "请先完成以下两步：\n\n1. 关注通知频道\n2. 加入官方交流群\n\n完成后点击「我已加入/签到」继续。";
+    `还差一步，小橘在门口等你。
+
+请先加入通知频道和官方交流群。
+回来后点「验证入群」，通过后完整菜单就会打开。`;
   sendMessage(msg, { inline_keyboard: inlineKeyboard });
 }
 
@@ -107,7 +110,7 @@ function generateJoinButtons(chats) {
     text: getChatButtonText(chat),
     url: `https://t.me/${chat.replace("@", "")}`
   }]);
-  inlineKeyboard.push([{ text: "我已加入/签到", callback_data: "/start" }]);
+  inlineKeyboard.push([{ text: "验证入群", callback_data: "/start" }]);
   return inlineKeyboard;
 }
 
@@ -121,7 +124,7 @@ function rewardInviterIfNeeded() {
 
   Api.sendMessage({
     chat_id: inviter.telegramid,
-    text: `你的邀请用户 ${user.first_name} 已完成验证，奖励 ${referralBonus} ${currency} 已到账。`,
+    text: `你邀请的新朋友 ${user.first_name} 已完成验证。${referralBonus} ${currency} 已放进你的小账本。`,
     parse_mode: "HTML"
   });
 }
@@ -129,14 +132,13 @@ function rewardInviterIfNeeded() {
 function getStartMessageContent() {
   return (
     SETTINGS.START_MESSAGE ||
-    `欢迎使用 Yume 积分机器人。
+    `欢迎回来，Yume 小店开门中。
 
-使用方式：
-1. 先关注通知频道，并加入官方交流群。
-2. 加入后点击「我已加入/签到」完成验证。
-3. 每日签到可获得积分。
-4. 邀请新用户加入并完成验证，可获得额外积分。
-5. 积分后续可在「积分商城」兑换福利。
+每日签到：0.5 积分
+邀请有效好友：1 积分
+首次通过活人验证：1 积分
+
+卡密商城还在上货，你可以先把积分攒起来。
 
 通知频道：@yumeGptplus
 官方交流群：https://t.me/yumeHubplus`
@@ -147,19 +149,19 @@ function getStartButtons() {
   return {
     inline_keyboard: [
       [
-        { text: "加入官方频道", url: "https://t.me/yumeGptplus" },
-        { text: "我已加入/签到", callback_data: "/bonus" }
+        { text: "我的积分", callback_data: "/balance" },
+        { text: "每日签到", callback_data: "/bonus" }
       ],
       [
-        { text: "邀请赚积分", callback_data: "/referral" },
-        { text: "我的积分", callback_data: "/balance" }
+        { text: "邀请好友", callback_data: "/referral" },
+        { text: "积分商城", callback_data: "/shop" }
       ],
       [
-        { text: "积分商城", callback_data: "/shop" },
-        { text: "邀请排行", callback_data: "/toplist" }
+        { text: "邀请排行", callback_data: "/toplist" },
+        { text: "使用教程", callback_data: "/help" }
       ],
       [
-        { text: "使用教程", callback_data: "/help" },
+        { text: "我的卡密", callback_data: "/cards" },
         { text: "返回主菜单", callback_data: "/start" }
       ]
     ]
@@ -177,7 +179,7 @@ if (!checkMembership()) {
 
 rewardInviterIfNeeded();
 
-const fullMessage = `${getStartMessageContent()}\n\n当前累计用户：${totalUser.value()}`;
+const fullMessage = `${getStartMessageContent()}\n\n小店来访人数：${totalUser.value()}`;
 const buttons = getStartButtons();
 
 if (request.message?.message_id) {

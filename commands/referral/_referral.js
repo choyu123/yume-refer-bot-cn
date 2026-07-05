@@ -16,18 +16,17 @@ const inviteLink = RefLib.getRefLink(bot.name, SETTINGS.REFER_LINK_PREFIX || "re
 const balance = Libs.ResourcesLib.userRes("balance").value();
 const totalInvites = RefLib.getRefCount();
 
-const refMessage = `<b>邀请赚积分</b>
+const refMessage = `<b>邀请好友</b>
 
-把下面的专属链接发给新用户：
+把这条专属链接发给朋友：
 <code>${inviteLink}</code>
 
-有效规则：
-新用户必须通过你的链接启动机器人，并完成通知频道/官方交流群验证，才算有效邀请。
+朋友通过链接进入，完成活人验证、加入频道和群后，会进入有效邀请记录。
 
-每 1 个有效邀请奖励 ${referralBonus} ${currency}。
+每 1 位有效好友奖励 ${referralBonus} ${currency}。
 
 当前积分：${balance} ${currency}
-累计有效邀请：${totalInvites}`;
+有效邀请：${totalInvites} 人`;
 
 const buttons = {
   inline_keyboard: [

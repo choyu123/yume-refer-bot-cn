@@ -12,4 +12,4 @@ CMD*/
 
 if (!options) return;
 
-Bot.sendMessage("已检测到你加入：" + options.chat_id, { parse_mode: "HTML" });
+Bot.sendMessage("这一处已经通过啦：" + options.chat_id, { parse_mode: "HTML" });

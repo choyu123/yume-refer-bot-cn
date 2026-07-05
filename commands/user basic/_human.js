@@ -36,7 +36,7 @@ function makeQuestion() {
 
 if (User.getProperty("human_verified")) {
   Api.sendMessage({
-    text: "你已经通过活人验证。\n\n下一步请加入通知频道和官方交流群，然后点击「验证入群」。",
+    text: "你已经通过活人验证啦。\n\n下一步加入通知频道和官方交流群，再点「验证入群」。",
     reply_markup: {
       inline_keyboard: [
         [
@@ -57,7 +57,11 @@ User.setProperty("human_question", question.text, "string");
 User.setProperty("human_attempts", 0, "integer");
 
 Api.sendMessage({
-  text: `第一步：活人验证\n\n挑战：${question.text} = ?\n\n请直接回复答案数字。`,
+  text: `小橘出题啦。
+
+${question.text} = ?
+
+直接回复答案数字就行。`,
   reply_markup: {
     inline_keyboard: [[{ text: "换一道题", callback_data: "/human" }]]
   }

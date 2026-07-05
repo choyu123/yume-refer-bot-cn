@@ -16,20 +16,31 @@
   group: 
 CMD*/
 
-const defaultStartMessage = `欢迎使用 Yume 积分机器人。
+const defaultStartMessage = `欢迎回来，Yume 小店开门中。
 
-使用方式：
-1. 先关注通知频道，并加入官方交流群。
-2. 加入后点击「我已加入/签到」完成验证。
-3. 每日签到可获得积分。
-4. 邀请新用户加入并完成验证，可获得额外积分。
-5. 积分后续可在「积分商城」兑换福利。
+每日签到：0.5 积分
+邀请有效好友：1 积分
+首次通过活人验证：1 积分
+
+卡密商城还在上货，你可以先把积分攒起来。
 
 通知频道：@yumeGptplus
 官方交流群：https://t.me/yumeHubplus`;
 
+const defaultHelpMessage = `小橘使用说明
+
+1. 先点「活人验证」，答对一道小题。
+2. 加入通知频道 @yumeGptplus。
+3. 加入官方交流群 https://t.me/yumeHubplus。
+4. 回到机器人点「验证入群」。
+5. 每日签到可以拿 0.5 积分。
+6. 邀请有效好友可以拿 1 积分。
+7. 以后兑换到的卡密，会放在「我的卡密」里。
+
+有问题就来官方交流群找小橘。`;
+
 const settingsPanel = {
-  title: "Yume 机器人设置",
+  title: "Yume 小店设置",
   description: "配置积分、邀请奖励、欢迎语和管理员。",
   index: 0,
   icon: "settings",
@@ -64,8 +75,8 @@ const settingsPanel = {
       title: "签到奖励",
       description: "用户每次签到获得多少积分。",
       type: "float",
-      placeholder: "1",
-      value: 1
+      placeholder: "0.5",
+      value: 0.5
     },
     {
       name: "BONUS_INTERVAL",
@@ -103,14 +114,15 @@ const settingsPanel = {
       title: "使用教程/客服说明",
       description: "用户点击「使用教程」时看到的内容。",
       type: "text",
-      placeholder: "填写教程或客服说明"
+      placeholder: "填写教程或客服说明",
+      value: defaultHelpMessage
     },
     {
       name: "START_MESSAGE",
       title: "欢迎语",
       description: "用户启动机器人后看到的主文案。",
       type: "text",
-      placeholder: "欢迎使用 Yume 积分机器人",
+      placeholder: "欢迎回来，Yume 小店开门中。",
       value: defaultStartMessage
     },
     {
@@ -118,8 +130,8 @@ const settingsPanel = {
       title: "错误提示",
       description: "用户操作失败时看到的提示。",
       type: "text",
-      placeholder: "操作失败，请稍后重试。",
-      value: "操作失败，请稍后重试。若一直无法使用，请加入官方交流群反馈：https://t.me/yumeHubplus"
+      placeholder: "小橘没看懂这句。",
+      value: "小橘没看懂这句。可以点「返回主菜单」重新选一下。"
     },
     {
       name: "MINIMUM_WITHDRAW",
@@ -166,9 +178,10 @@ const botCommands = [
   { command: "/start", description: "打开主菜单" },
   { command: "/human", description: "活人验证" },
   { command: "/bonus", description: "每日签到" },
-  { command: "/referral", description: "邀请赚积分" },
-  { command: "/balance", description: "查看我的积分" },
+  { command: "/referral", description: "邀请好友" },
+  { command: "/balance", description: "我的积分" },
   { command: "/shop", description: "积分商城" },
+  { command: "/cards", description: "我的卡密" },
   { command: "/toplist", description: "邀请排行" },
   { command: "/myreferrals", description: "邀请明细" },
   { command: "/help", description: "使用教程" },
@@ -188,5 +201,5 @@ AdminPanel.setPanel({
 });
 
 Libs.MembershipChecker.setup();
-Bot.sendMessage("Yume 机器人基础设置已完成。");
-Bot.sendMessage("命令菜单已更新为中文。");
+Bot.sendMessage("Yume 小店基础设置已完成。");
+Bot.sendMessage("命令菜单已更新。");

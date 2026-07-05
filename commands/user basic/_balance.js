@@ -20,25 +20,25 @@ const inviteLink = Libs.ReferralLib.getRefLink(bot.name, linkPrefix);
 const balance = Libs.ResourcesLib.userRes("balance").value();
 const inviteCount = Libs.ReferralLib.getRefCount();
 
-const profileMessage = `<b>我的积分</b>
+const profileMessage = `<b>你的小账本</b>
 
-用户 ID：<code>${userId}</code>
 昵称：${firstName}
 用户名：${username}
+用户 ID：<code>${userId}</code>
 邀请人：${inviter?.first_name || "无"}
 
 当前积分：${balance} ${currency}
-累计有效邀请：${inviteCount}
+有效邀请：${inviteCount} 人
 
-专属邀请链接：
+你的邀请链接：
 <code>${inviteLink}</code>`;
 
 const buttons = {
   inline_keyboard: [
     [{ text: "复制邀请链接", copy_text: { text: inviteLink } }],
     [
-      { text: "邀请赚积分", callback_data: "/referral" },
-      { text: "积分商城", callback_data: "/shop" }
+      { text: "邀请好友", callback_data: "/referral" },
+      { text: "我的卡密", callback_data: "/cards" }
     ],
     [{ text: "返回主菜单", callback_data: "/start" }]
   ]

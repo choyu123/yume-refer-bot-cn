@@ -13,14 +13,14 @@ CMD*/
 const refList = Libs.ReferralLib.getRefList();
 let referralDetails = `<b>邀请明细</b>
 
-累计有效邀请：${Libs.ReferralLib.getRefCount()}
+有效邀请：${Libs.ReferralLib.getRefCount()} 人
 首次邀请时间：${refList.created_at || "暂无"}
 
-<b>我的邀请用户：</b>
+<b>你带来的朋友：</b>
 `;
 
 if (!refList.exist) {
-  referralDetails = "暂无邀请记录。";
+  referralDetails = "这里还空空的。把邀请链接发给朋友，小橘会帮你记账。";
 } else {
   const referredUsers = refList.getUsers();
   for (let index in referredUsers) {
