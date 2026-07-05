@@ -5,6 +5,7 @@
 基于 `bots-business/ReferAndEarnBot` 改造，保留：
 
 - 频道/群成员校验
+- 活人验证随机算术题
 - 邀请链接
 - 邀请奖励
 - 每日签到

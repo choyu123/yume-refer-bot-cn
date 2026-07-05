@@ -84,6 +84,14 @@ const settingsPanel = {
       value: 1
     },
     {
+      name: "HUMAN_VERIFY_REWARD",
+      title: "活人验证奖励",
+      description: "用户首次通过活人验证后赠送多少积分。",
+      type: "float",
+      placeholder: "1",
+      value: 1
+    },
+    {
       name: "ADMINS",
       title: "管理员 Telegram 数字 ID",
       description: "多个管理员用英文逗号分隔。可用 @userinfobot 查询数字 ID。",
@@ -156,6 +164,7 @@ const settingsPanel = {
 
 const botCommands = [
   { command: "/start", description: "打开主菜单" },
+  { command: "/human", description: "活人验证" },
   { command: "/bonus", description: "每日签到" },
   { command: "/referral", description: "邀请赚积分" },
   { command: "/balance", description: "查看我的积分" },

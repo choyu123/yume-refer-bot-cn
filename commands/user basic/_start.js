@@ -69,6 +69,24 @@ function checkMembership() {
   return true;
 }
 
+function isHumanVerified() {
+  return User.getProperty("human_verified") === true;
+}
+
+function sendHumanVerificationMessage() {
+  const msg = `欢迎使用 Yume 积分机器人。
+
+第一步：先通过活人验证。
+通过后再加入通知频道和官方交流群，即可解锁完整菜单。`;
+
+  sendMessage(msg, {
+    inline_keyboard: [
+      [{ text: "活人验证", callback_data: "/human" }],
+      [{ text: "切换语言", callback_data: "/help" }]
+    ]
+  });
+}
+
 function sendJoinMessage(chats) {
   const inlineKeyboard = generateJoinButtons(chats);
   const msg =
@@ -146,6 +164,11 @@ function getStartButtons() {
       ]
     ]
   };
+}
+
+if (!isHumanVerified()) {
+  sendHumanVerificationMessage();
+  return;
 }
 
 if (!checkMembership()) {
