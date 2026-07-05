@@ -43,7 +43,6 @@ const profileMessage = `<b>你的小账本</b>
 
 const buttons = {
   inline_keyboard: [
-    [{ text: "复制邀请链接", copy_text: { text: inviteLink } }],
     [
       { text: "邀请赚积分", callback_data: "/invite" },
       { text: "我的卡密", callback_data: "/cards" }

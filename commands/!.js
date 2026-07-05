@@ -13,13 +13,59 @@ CMD*/
 if (!user) return;
 
 function incomingText() {
-  return (typeof message !== "undefined" && message ? message : request?.text || "").trim();
+  const candidates = [
+    request?.data,
+    request?.text,
+    typeof message !== "undefined" ? message : "",
+    request?.message?.text
+  ];
+
+  for (let i = 0; i < candidates.length; i += 1) {
+    const value = candidates[i];
+    if (value !== undefined && value !== null && String(value).trim()) {
+      return String(value).trim();
+    }
+  }
+
+  return "";
 }
 
 const text = incomingText();
 
-if (["/invite", "/referral", "邀请赚积分", "邀请好友"].includes(text)) {
-  Bot.runCommand("/invite");
+const callbackRoutes = {
+  "/invite": "/invite",
+  "/referral": "/invite",
+  "邀请赚积分": "/invite",
+  "邀请好友": "/invite",
+  "/balance": "/balance",
+  "我的积分": "/balance",
+  "/shop": "/shop",
+  "积分商城": "/shop",
+  "/cards": "/cards",
+  "我的卡密": "/cards",
+  "/bonus": "/bonus",
+  "我已加入/签到": "/bonus",
+  "/toplist": "/toplist",
+  "邀请排行": "/toplist",
+  "/help": "/help",
+  "使用教程": "/help",
+  "/start": "/start",
+  "返回主菜单": "/start",
+  "/human": "/human",
+  "活人验证": "/human",
+  "/myreferrals": "/myreferrals",
+  "邀请明细": "/myreferrals",
+  "/settle_referrals": "/settle_referrals",
+  "刷新邀请奖励": "/settle_referrals"
+};
+
+if (callbackRoutes[text]) {
+  Bot.runCommand(callbackRoutes[text]);
+  return;
+}
+
+if (text.indexOf("/buy ") === 0) {
+  Bot.runCommand(text);
   return;
 }
 
