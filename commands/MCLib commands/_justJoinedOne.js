@@ -12,4 +12,4 @@ CMD*/
 
 if (!options) return;
 
-Bot.sendMessage("这一处已经通过啦，喵~ " + options.chat_id, { parse_mode: "HTML" });
+Bot.sendMessage(`这一处已经通过啦，喵~ ${options.chat_id || ""}`, { parse_mode: "HTML" });

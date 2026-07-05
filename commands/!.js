@@ -12,27 +12,33 @@ CMD*/
 
 if (!user) return;
 
-function getIncomingText() {
+function incomingText() {
   return (typeof message !== "undefined" && message ? message : request?.text || "").trim();
+}
+
+function joinButtons() {
+  return {
+    inline_keyboard: [
+      [
+        { text: "加入通知频道", url: "https://t.me/yumeGptplus" },
+        { text: "加入官方交流群", url: "https://t.me/yumeHubplus" }
+      ],
+      [{ text: "我已加入/签到", callback_data: "/start" }]
+    ]
+  };
 }
 
 function sendJoinNextStep() {
   Api.sendMessage({
-    text: "验证通过，小橘给你开门啦，喵~\n\n现在加入通知频道和官方交流群，再点「验证入群」。",
-    reply_markup: {
-      inline_keyboard: [
-        [
-          { text: "加入通知频道", url: "https://t.me/yumeGptplus" },
-          { text: "加入官方交流群", url: "https://t.me/yumeHubplus" }
-        ],
-        [{ text: "验证入群", callback_data: "/start" }]
-      ]
-    }
+    text: `验证通过，小橘给你开门啦，喵~
+
+现在加入通知频道和官方交流群，再点「我已加入/签到」。`,
+    reply_markup: joinButtons()
   });
 }
 
 if (User.getProperty("human_pending")) {
-  const text = getIncomingText();
+  const text = incomingText();
   const expected = User.getProperty("human_answer");
 
   if (text === expected) {
@@ -40,9 +46,13 @@ if (User.getProperty("human_pending")) {
     User.setProperty("human_verified", true, "boolean");
     User.setProperty("human_verified_at", new Date().toISOString(), "string");
 
+    const records = Libs.YumeReferral.loadRecords();
+    Libs.YumeReferral.markHumanVerified(records, user.telegramid);
+    Libs.YumeReferral.saveRecords(records);
+
     if (!User.getProperty("human_rewarded")) {
-      const reward = Number(SETTINGS.HUMAN_VERIFY_REWARD || 1);
-      const currency = SETTINGS.CURRENCY || "积分";
+      const reward = Libs.YumeConfig.humanReward();
+      const currency = Libs.YumeConfig.currency();
       Libs.ResourcesLib.userRes("balance").add(reward);
       User.setProperty("human_rewarded", true, "boolean");
       Bot.sendMessage(`答对啦，喵~ 小橘给你放了 ${reward} ${currency} 到账本里。`);
@@ -50,11 +60,22 @@ if (User.getProperty("human_pending")) {
       Bot.sendMessage("答对啦，活人验证通过，喵~");
     }
 
+    const inviter = Libs.ReferralLib.getAttractedBy();
+    const noticeCount = Number(User.getProperty("inviter_notice_count") || 0);
+    if (inviter && noticeCount < 5) {
+      Api.sendMessage({
+        chat_id: inviter.telegramid,
+        text: `你邀请的好友 <a href="tg://user?id=${user.telegramid}">${user.first_name || "用户"}</a> 已通过活人验证，正在往有效邀请路上走，喵~`,
+        parse_mode: "HTML"
+      });
+      User.setProperty("inviter_notice_count", noticeCount + 1, "integer");
+    }
+
     sendJoinNextStep();
     return;
   }
 
-  let attempts = Number(User.getProperty("human_attempts") || 0) + 1;
+  const attempts = Number(User.getProperty("human_attempts") || 0) + 1;
   User.setProperty("human_attempts", attempts, "integer");
 
   if (attempts >= 3) {
@@ -66,8 +87,7 @@ if (User.getProperty("human_pending")) {
   return;
 }
 
-let errorMessage =
+Bot.sendMessage(
   SETTINGS.ERROR_MESSAGE ||
-  "小橘没看懂这句，喵~ 可以点「返回主菜单」重新选一下。";
-
-Bot.sendMessage(errorMessage);
+  "小橘没看懂这句，喵~ 可以点「返回主菜单」重新选一下。"
+);

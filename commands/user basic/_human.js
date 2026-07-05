@@ -36,14 +36,16 @@ function makeQuestion() {
 
 if (User.getProperty("human_verified")) {
   Api.sendMessage({
-    text: "你已经通过活人验证啦，喵~\n\n下一步加入通知频道和官方交流群，再点「验证入群」。",
+    text: `你已经通过活人验证啦，喵~
+
+下一步加入通知频道和官方交流群，再点「我已加入/签到」。`,
     reply_markup: {
       inline_keyboard: [
         [
           { text: "加入通知频道", url: "https://t.me/yumeGptplus" },
           { text: "加入官方交流群", url: "https://t.me/yumeHubplus" }
         ],
-        [{ text: "验证入群", callback_data: "/start" }]
+        [{ text: "我已加入/签到", callback_data: "/start" }]
       ]
     }
   });
