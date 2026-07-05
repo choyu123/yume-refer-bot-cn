@@ -167,6 +167,7 @@ function track(_trackOptions={}){
 
 publish({
   getLink: getRefLink,
+  getRefLink: getRefLink,
   track: track,
   getRefList: getRefList,
   getRefCount: getRefCount,

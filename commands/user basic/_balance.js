@@ -16,7 +16,8 @@ const userId = user.telegramid;
 const firstName = user.first_name || "未设置";
 const username = user.username ? "@" + user.username : "未设置";
 const inviter = RefLib.getAttractedBy();
-const inviteLink = Libs.ReferralLib.getRefLink(bot.name, linkPrefix);
+Libs.ReferralLib.setLinkPrefix(linkPrefix);
+const inviteLink = Libs.ReferralLib.getLink(bot.name);
 const balance = Libs.ResourcesLib.userRes("balance").value();
 const records = Libs.YumeReferral.loadRecords();
 const stats = Libs.YumeReferral.getInviterStats(
