@@ -1,47 +1,46 @@
 /*CMD
   command: /myreferrals
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: referral
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
-const refList = Libs.ReferralLib.getRefList();
-let referralDetails = `<b>邀请明细</b>
+const records = Libs.YumeReferral.loadRecords();
+const items = Libs.YumeReferral.getRecentForInviter(
+  records,
+  user.telegramid,
+  Date.now(),
+  Libs.YumeConfig.observationMs(),
+  10
+);
 
-有效邀请：${Libs.ReferralLib.getRefCount()} 人
-首次邀请时间：${refList.created_at || "暂无"}
+let message = "<b>邀请明细</b>\n\n";
 
-<b>你带来的朋友：</b>
-`;
-
-if (!refList.exist) {
-  referralDetails = "这里还空空的。把邀请链接发给朋友，小橘会帮你记账。";
+if (items.length === 0) {
+  message += "这里还空空的。把邀请链接发给朋友，小橘会帮你记账，喵~";
 } else {
-  const referredUsers = refList.getUsers();
-  for (let index in referredUsers) {
-    const invited = referredUsers[index];
-    referralDetails += `- <a href="tg://user?id=${invited.telegramid}">${invited.first_name || "用户"}</a>\n`;
-  }
+  items.forEach((item, index) => {
+    message += `${index + 1}. <a href="tg://user?id=${item.invited_id}">${item.invited_name}</a> - ${item.status}\n`;
+  });
 }
 
-const backButton = [[{ text: "返回邀请页", callback_data: "/referral" }]];
+const buttons = {
+  inline_keyboard: [[{ text: "返回邀请页", callback_data: "/referral" }]]
+};
 
 if (request.message && request.message.message_id) {
   Api.editMessageText({
     message_id: request.message.message_id,
-    text: referralDetails,
+    text: message,
     parse_mode: "HTML",
-    reply_markup: { inline_keyboard: backButton }
+    reply_markup: buttons
   });
-} else {
-  Api.sendMessage({
-    text: referralDetails,
-    parse_mode: "HTML",
-    reply_markup: { inline_keyboard: backButton }
-  });
+  return;
 }
+
+Api.sendMessage({ text: message, parse_mode: "HTML", reply_markup: buttons });
