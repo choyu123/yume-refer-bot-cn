@@ -17,16 +17,20 @@ const firstName = user.first_name || "未设置";
 const username = user.username ? "@" + user.username : "未设置";
 const inviter = Libs.ReferralLib.getAttractedBy();
 const inviterName = inviter && inviter.first_name ? inviter.first_name : "无";
-Libs.ReferralLib.setLinkPrefix(linkPrefix);
-const inviteLink = Libs.ReferralLib.getLink(bot.name);
+const inviteUserId = user.id || user.telegramid;
+const inviteLink = "https://t.me/" + bot.name + "?start=" + linkPrefix + inviteUserId;
 const balance = Libs.ResourcesLib.userRes("balance").value();
-const records = Libs.YumeReferral.loadRecords();
-const stats = Libs.YumeReferral.getInviterStats(
-  records,
-  user.telegramid,
-  Date.now(),
-  Libs.YumeConfig.observationMs()
-);
+let stats = { settled: 0, observing: 0 };
+
+try {
+  const records = Libs.YumeReferral.loadRecords();
+  stats = Libs.YumeReferral.getInviterStats(
+    records,
+    user.telegramid,
+    Date.now(),
+    Libs.YumeConfig.observationMs()
+  );
+} catch (e) {}
 
 const profileMessage = `<b>你的小账本</b>
 
