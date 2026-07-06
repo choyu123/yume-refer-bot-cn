@@ -11,29 +11,19 @@
 CMD*/
 
 const linkPrefix = SETTINGS.REFER_LINK_PREFIX || "ref";
+Libs.ReferralLib.setLinkPrefix(linkPrefix);
 
 const currency = Libs.YumeConfig.currency();
-const inviteUserId = user.id || user.telegramid;
-const inviteLink = "https://t.me/" + bot.name + "?start=" + linkPrefix + inviteUserId;
+const inviteLink = Libs.ReferralLib.getLink(bot.name);
 const balance = Libs.ResourcesLib.userRes("balance").value();
 const reward = Libs.YumeConfig.referReward();
-let stats = {
-  bound: 0,
-  notVerified: 0,
-  observing: 0,
-  ready: 0,
-  settled: 0
-};
-
-try {
-  const records = Libs.YumeReferral.loadRecords();
-  stats = Libs.YumeReferral.getInviterStats(
-    records,
-    user.telegramid,
-    Date.now(),
-    Libs.YumeConfig.observationMs()
-  );
-} catch (e) {}
+const records = Libs.YumeReferral.loadRecords();
+const stats = Libs.YumeReferral.getInviterStats(
+  records,
+  user.telegramid,
+  Date.now(),
+  Libs.YumeConfig.observationMs()
+);
 const shareText = "来 Yume 小店领积分，喵~";
 const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(inviteLink)}&text=${encodeURIComponent(shareText)}`;
 

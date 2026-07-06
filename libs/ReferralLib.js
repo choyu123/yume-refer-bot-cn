@@ -73,14 +73,7 @@ function setReferral(userId){
   let userKey = LIB_PREFIX + 'user' + String(userId);
   let refUser = Bot.getProperty(userKey);
 
-  if(!refUser){
-    refUser = {
-      id: userId,
-      telegramid: userId,
-      first_name: "邀请人",
-      username: ""
-    }
-  }
+  if(!refUser){ return }
 
   User.setProperty(LIB_PREFIX + 'attracted_by_user', refUser, 'json');
   
@@ -118,8 +111,7 @@ function trackRef(){
   userId = parseInt(userId)
 
   // own link was touched
-  let currentUserId = user.id || user.telegramid;
-  if(userId==currentUserId){ return emitEvent('onTouchOwnLink') }
+  if(userId==user.id){ return emitEvent('onTouchOwnLink') }
 
   // it is affiliated by another user
   return setReferral(userId);
@@ -138,16 +130,6 @@ function getAttractedBy(){
   return prop;
 }
 
-function getSafeUserSnapshot(){
-  let userId = user.id || user.telegramid;
-  return {
-    id: userId,
-    telegramid: user.telegramid || userId,
-    first_name: user.first_name || "",
-    username: user.username || ""
-  };
-}
-
 function getRefLink(botName){
   var prefix = getPrefix()
 
@@ -157,11 +139,12 @@ function getRefLink(botName){
 
   if(!botName){ botName = bot.name }
 
-  let safeUser = getSafeUserSnapshot();
-  let userKey = LIB_PREFIX + 'user' + safeUser.id;
-  Bot.setProperty(userKey, safeUser, 'json');
+  // TODO: we need something like User.get({ user_id, xxx, bot_id: yyy })
+  // because this data in database already and we don't need this bot prop 
+  let userKey = LIB_PREFIX + 'user' + user.id;
+  Bot.setProperty(userKey, user, 'json');
 
-  return 'https://t.me/' + botName + '?start=' + prefix + safeUser.id;
+  return 'https://t.me/' + botName + '?start=' + prefix + user.id;
 }
 
 function isDeepLink(){
